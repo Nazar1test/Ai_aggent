@@ -1,6 +1,6 @@
 # AI Aggent Playwright Tests
 
-This repository contains a Playwright test automation skeleton for TC01, TC02, and TC03.
+This repository contains Playwright automation for TC01, TC02, and TC03 from the EliteA Agents smoke suite.
 
 ## Setup
 
@@ -10,13 +10,21 @@ This repository contains a Playwright test automation skeleton for TC01, TC02, a
    npx playwright install
    ```
 
-2. Run the tests:
+2. Configure the target environment:
+   ```bash
+   export ELITEA_BASE_URL=https://next.elitea.ai
+   export ELITEA_USERNAME=your_username
+   export ELITEA_PASSWORD=your_password
+   ```
+
+3. Run the tests:
    ```bash
    npm test
    ```
 
 ## Notes
 
-- The target page `https://kb.epam.com/display/EPMXYZ/Test+Cases` requires authentication.
-- The provided GitHub API token could not be validated in this environment, so remote repository creation or push operations are not complete.
-- Replace the placeholder assertions inside `tests/tc01.spec.ts`, `tests/tc02.spec.ts`, and `tests/tc03.spec.ts` with the actual test case steps once authenticated access is available.
+- The tests are configured to use `https://next.elitea.ai` by default.
+- `tests/helpers.ts` contains the shared login flow and base URL configuration.
+- Selectors are generic placeholders and should be refined against the actual Agents UI.
+- If the app uses different field names or buttons, update the selectors in `tests/tc01.spec.ts`, `tests/tc02.spec.ts`, and `tests/tc03.spec.ts`.
