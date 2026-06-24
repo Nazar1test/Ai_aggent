@@ -1,7 +1,19 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
+import { AgentsPage } from '../pages/agents.page';
 
-test('TC01 - open EPAM KB test cases page', async ({ page }) => {
-  await page.goto('https://kb.epam.com/display/EPMXYZ/Test+Cases');
-  await expect(page).toHaveTitle(/EPAM|Test Cases|Login|Sign in/);
-  // TODO: update this test with the actual TC01 steps after authenticated access is available.
+const BASE_URL = process.env.BASE_URL ?? 'https://example.com';
+
+test('TC01 - Create Agent with All Mandatory Fields', async ({ page }) => {
+  const agentsPage = new AgentsPage(page);
+
+  await agentsPage.goto(BASE_URL);
+  await agentsPage.openCreateAgentForm();
+  await agentsPage.fillAgentForm({
+    name: 'TestAgent1',
+    description: 'Test Description',
+    context: 'Test Context',
+  });
+  await agentsPage.saveAgent();
+
+  await agentsPage.assertSuccessMessage();
 });
