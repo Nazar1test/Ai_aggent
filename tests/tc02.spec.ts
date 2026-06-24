@@ -1,8 +1,19 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
+import { AgentsPage } from '../pages/agents.page';
 
-test('TC02 - verify EPAM KB login form appears for test case access', async ({ page }) => {
-  await page.goto('https://kb.epam.com/display/EPMXYZ/Test+Cases');
-  await expect(page.locator('input[type="text"], input[type="email"], input[name="username"], input[name="login"]')).toHaveCount(1);
-  await expect(page.locator('input[type="password"], input[name="password"]')).toHaveCount(1);
-  // TODO: replace this with the actual TC02 assertions for the target test case.
+const BASE_URL = process.env.BASE_URL ?? 'https://example.com';
+
+test('TC02 - Create Agent Skipping Mandatory Fields', async ({ page }) => {
+  const agentsPage = new AgentsPage(page);
+
+  await agentsPage.goto(BASE_URL);
+  await agentsPage.openCreateAgentForm();
+  await agentsPage.fillAgentForm({
+    name: '',
+    description: 'Test Description',
+    context: 'Test Context',
+  });
+  await agentsPage.saveAgent();
+
+  await agentsPage.assertValidationMessage();
 });
